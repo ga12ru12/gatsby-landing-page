@@ -1,18 +1,11 @@
-import React from 'react'
-import Features from '../components/Features'
-import Testimonials from '../components/Testimonials'
-import Pricing from '../components/Pricing'
+import React from 'react';
+import graphql from 'graphql';
+import Features from '../components/Features';
+import Testimonials from '../components/Testimonials';
+import Pricing from '../components/Pricing';
 
 export const ProductPageTemplate = ({
-  image,
-  title,
-  heading,
-  description,
-  intro,
-  main,
-  testimonials,
-  fullImage,
-  pricing,
+  image, title, heading, description, intro, main, testimonials, fullImage, pricing,
 }) => (
   <section className="section section--gradient">
     <div className="container">
@@ -38,18 +31,14 @@ export const ProductPageTemplate = ({
               </div>
               <div className="columns">
                 <div className="column is-7">
-                  <h3 className="has-text-weight-semibold is-size-2">
-                    {heading}
-                  </h3>
+                  <h3 className="has-text-weight-semibold is-size-2">{heading}</h3>
                   <p>{description}</p>
                 </div>
               </div>
               <Features gridItems={intro.blurbs} />
               <div className="columns">
                 <div className="column is-7">
-                  <h3 className="has-text-weight-semibold is-size-3">
-                    {main.heading}
-                  </h3>
+                  <h3 className="has-text-weight-semibold is-size-3">{main.heading}</h3>
                   <p>{main.description}</p>
                 </div>
               </div>
@@ -91,9 +80,7 @@ export const ProductPageTemplate = ({
                 className="full-width-image-container"
                 style={{ backgroundImage: `url(${fullImage})` }}
               />
-              <h2 className="has-text-weight-semibold is-size-2">
-                {pricing.heading}
-              </h2>
+              <h2 className="has-text-weight-semibold is-size-2">{pricing.heading}</h2>
               <p className="is-size-5">{pricing.description}</p>
               <Pricing data={pricing.plans} />
             </div>
@@ -102,10 +89,10 @@ export const ProductPageTemplate = ({
       </div>
     </div>
   </section>
-)
+);
 
 export default ({ data }) => {
-  const { frontmatter } = data.markdownRemark
+  const { frontmatter } = data.markdownRemark;
 
   return (
     <ProductPageTemplate
@@ -119,14 +106,15 @@ export default ({ data }) => {
       fullImage={frontmatter.full_image}
       pricing={frontmatter.pricing}
     />
-  )
-}
+  );
+};
 
 export const productPageQuery = graphql`
-  query ProductPage($id: String!) {
-    markdownRemark(id: { eq: $id }) {
+  query ProductPage($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
       frontmatter {
         title
+        path
         image
         heading
         description
@@ -172,4 +160,4 @@ export const productPageQuery = graphql`
       }
     }
   }
-`
+`;
